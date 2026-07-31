@@ -1,18 +1,26 @@
 {:paths ["src" "dev" "resources"]
- :deps  {cheshire/cheshire               {:mvn/version "6.2.0"}
-         io.pedestal/pedestal.service    {:mvn/version "0.8.1"}
-         io.pedestal/pedestal.route      {:mvn/version "0.8.1"}
-         io.pedestal/pedestal.http-kit   {:mvn/version "0.8.1"}
-         com.stuartsierra/component      {:mvn/version "1.2.0"}
-         com.stuartsierra/component.repl {:mvn/version "1.0.0"}
-         org.clj-commons/humanize        {:mvn/version "1.2"}
-         org.slf4j/slf4j-simple          {:mvn/version "2.0.18"}}
+ :deps  {cheshire/cheshire                       {:mvn/version "6.2.0"}
+         clj-http/clj-http                       {:mvn/version "3.13.1"}
+         com.github.seancorfield/next.jdbc       {:mvn/version "1.3.9999-SNAPSHOT"}
+         io.pedestal/pedestal.service            {:mvn/version "0.8.1"}
+         io.pedestal/pedestal.route              {:mvn/version "0.8.1"}
+         io.pedestal/pedestal.http-kit           {:mvn/version "0.8.1"}
+         com.stuartsierra/component              {:mvn/version "1.2.0"}
+         com.stuartsierra/component.repl         {:mvn/version "1.0.0"}
+         io.github.cdimascio/dotenv-java         {:mvn/version "3.2.0"}
+         org.clj-commons/humanize                {:mvn/version "1.2"}
+         org.slf4j/slf4j-simple                  {:mvn/version "2.0.18"}
+         com.zaxxer/HikariCP                     {:mvn/version "7.1.0"}
+         org.clojure/tools.logging               {:mvn/version "1.3.1"}
+         org.flywaydb/flyway-core                {:mvn/version "12.11.0"}
+         org.flywaydb/flyway-database-postgresql {:mvn/version "12.11.0"}
+         org.postgresql/postgresql               {:mvn/version "42.7.13"}}
  :aliases
  {:test
   {:extra-paths ["test"]
    :extra-deps  {io.github.cognitect-labs/test-runner {:git/tag "v0.5.1"
                                                        :git/sha "dfb30dd"}
-                 nubank/matcher-combinators           {:mvn/version "3.10.0"}
+                 nubank/matcher-combinators           {:mvn/version "3.10.1"}
                  io.github.tonsky/clj-reload          {:mvn/version "1.0.0"}}
    :exec-fn     cognitect.test-runner.api/test}
 

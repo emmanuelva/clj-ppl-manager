@@ -32,6 +32,8 @@
                       :router :map-tree
                       :secure-headers {:content-security-policy-settings {:object-src "none"}}}
                      (conn/with-default-interceptors)
+                     (update :interceptors concat
+                             [content-negotiation-interceptor])
                      (conn/with-routes clj-ppl-manager.routes/combined-routes)
                      (hk/create-connector nil)
                      (conn/start!))]

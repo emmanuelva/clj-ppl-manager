@@ -6,6 +6,6 @@
   (fn [_old-system]
     (core/app-system
       {:server  {:port 3001}
-       :db-spec {:jdbcUrl  "jdbc:postgresql://localhost:5432/pplmanager"
+       :db-spec {:jdbcUrl  "jdbc:postgresql://localhost:5432/clj-ppl-manager"
                  :username "postgres"
                  :password "postgres"}})))

@@ -1,12 +1,13 @@
 (ns clj-ppl-manager.core
-  (:require [clj-ppl-manager.components.pedestal :as pedestal-component]
+  (:require [clj-ppl-manager.components.pedestal :as component.pedestal]
+            [clj-ppl-manager.components.datasource :as components.datasource]
             [com.stuartsierra.component :as component]))
 
 (defn app-system
   [config]
   (component/system-map
-    ;; :data-source (datasource-component/datasource-component config)
+    :data-source (components.datasource/datasource-component config)
     :pedestal-component
     (component/using
-      (pedestal-component/new-pedestal-component config)
-      [])))
+      (component.pedestal/new-pedestal-component config)
+      [:data-source])))
