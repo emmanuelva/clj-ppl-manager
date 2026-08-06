@@ -7,7 +7,7 @@
 
 (deftest health-test
   (aux.component/with-system
-    [sut (core/app-system (aux.component/test-config))]
+    [sut (core/base-test-app-system (aux.component/test-config))]
     (testing "that health endpoint returns a valid response"
       (is (= {:body   "{\"status\":\"OK\"}"
               :status 200}

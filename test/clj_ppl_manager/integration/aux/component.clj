@@ -29,3 +29,9 @@
   []
   (assoc-in (config/system-config) [:server :port] (get-free-port)))
 
+(defn test-with-container-config
+  [database-container]
+  (-> (assoc-in (config/system-config) [:server :port] (get-free-port))
+      (assoc :db-spec {:jdbcUrl (.getJdbcUrl database-container)
+                       :username (.getUsername database-container)
+                       :password (.getPassword database-container)})))

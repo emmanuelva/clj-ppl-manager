@@ -19,4 +19,3 @@
                             (env-get "DATABASE_NAME" "ecommerce"))
              :username (env-get "DATABASE_USERNAME" "postgres")
              :password (env-get "DATABASE_PASSWORD" "postgres")}})
-

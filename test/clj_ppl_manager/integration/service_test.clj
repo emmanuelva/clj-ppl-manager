@@ -1,5 +1,5 @@
 (ns clj-ppl-manager.integration.service-test
-  (:require [clj-ppl-manager.core]
+  (:require [clj-ppl-manager.core :as core]
             [clj-ppl-manager.integration.aux.component :as aux.component]
             [clj-ppl-manager.components.pedestal :refer [url-for]]
             [clj-http.client :as client]
@@ -7,7 +7,7 @@
 
 (deftest content-negotiation-test
   (aux.component/with-system
-    [sut (clj-ppl-manager.core/app-system (aux.component/test-config))]
+    [sut (core/base-test-app-system (aux.component/test-config))]
     (testing "only application/json is accepted"
       (is (= {:body   "{\"status\":\"OK\"}"
               :status 200}

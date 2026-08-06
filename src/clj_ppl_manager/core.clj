@@ -6,8 +6,16 @@
 (defn app-system
   [config]
   (component/system-map
-    :data-source (components.datasource/datasource-component config)
+    :datasource (components.datasource/datasource-component config)
     :pedestal-component
     (component/using
       (component.pedestal/new-pedestal-component config)
-      [:data-source])))
+      [:datasource])))
+
+(defn base-test-app-system
+  [config]
+  (component/system-map
+    :pedestal-component
+    (component/using
+      (component.pedestal/new-pedestal-component config)
+      [])))
