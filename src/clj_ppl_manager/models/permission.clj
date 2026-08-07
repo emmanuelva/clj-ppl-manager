@@ -7,3 +7,9 @@
              [:role-id :uuid]
              [:field :string]
              [:write :boolean]]))
+
+(def NewPermission
+  (m/schema [:map
+             [:role-id :uuid]
+             [:field :string]
+             [:write :boolean]]))

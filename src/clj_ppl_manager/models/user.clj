@@ -7,3 +7,9 @@
              [:role-id :uuid]
              [:email :string]
              [:password :string]]))
+
+(def NewUser
+  (m/schema [:map
+             [:role-id :uuid]
+             [:email :string]
+             [:password :string]]))

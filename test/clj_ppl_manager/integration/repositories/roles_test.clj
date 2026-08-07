@@ -1,30 +1,16 @@
 (ns clj-ppl-manager.integration.repositories.roles-test
-  (:require [clj-ppl-manager.components.datasource :as components.datasource]
-            [clj-ppl-manager.integration.aux.component :as aux.component]
-            [clj-ppl-manager.integration.aux.containers :as aux.containers]
+  (:require [clj-ppl-manager.integration.aux.component :as aux.component]
             [clj-ppl-manager.repositories.roles :as repositories.roles]
-            [com.stuartsierra.component :as component]
             [clojure.test :refer :all]))
 
 (def ^:dynamic *datasource* nil)
 
-(defn with-database
-  [f]
-  (let [database-container (aux.containers/create-database-container)]
-    (try
-      (.start database-container)
-      (let [started (component/start
-                       (components.datasource/datasource-component
-                         (aux.component/test-with-container-config database-container)))]
-        (try
-          (binding [*datasource* (started)]
-            (f))
-          (finally
-            (component/stop started))))
-      (finally
-        (.stop database-container)))))
-
-(use-fixtures :once with-database)
+(use-fixtures :once
+  (fn [f]
+    (aux.component/with-datasource
+      (fn [datasource]
+        (binding [*datasource* datasource]
+          (f))))))
 
 (defn random-role-name
   []

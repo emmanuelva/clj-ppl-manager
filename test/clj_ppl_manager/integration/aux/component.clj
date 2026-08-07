@@ -1,6 +1,8 @@
 (ns clj-ppl-manager.integration.aux.component
-  (:require [clj-ppl-manager.config :as config]
+  (:require [clj-ppl-manager.components.datasource :as components.datasource]
+            [clj-ppl-manager.config :as config]
             [clj-ppl-manager.core]
+            [clj-ppl-manager.integration.aux.containers :as aux.containers]
             [clojure.string :as str]
             [clojure.test :refer :all]
             [com.stuartsierra.component :as component])
@@ -32,6 +34,20 @@
 (defn test-with-container-config
   [database-container]
   (-> (assoc-in (config/system-config) [:server :port] (get-free-port))
-      (assoc :db-spec {:jdbcUrl (.getJdbcUrl database-container)
+      (assoc :db-spec {:jdbcUrl  (.getJdbcUrl database-container)
                        :username (.getUsername database-container)
                        :password (.getPassword database-container)})))
+
+(defn with-datasource [f]
+  (let [database-container (aux.containers/create-database-container)]
+    (try
+      (.start database-container)
+      (let [started (component/start
+                      (components.datasource/datasource-component
+                        (test-with-container-config database-container)))]
+        (try
+          (f (started))
+          (finally
+            (component/stop started))))
+      (finally
+        (.stop database-container)))))
