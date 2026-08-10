@@ -14,6 +14,6 @@
 (defn find-role
   [id datasource]
   (let [role (repositories.roles/get-role-by-id id datasource)]
-    (if (seq role)
-      {:ok true :role role}
-      {:ok false :errors :not-found})))
+    (if (empty? role)
+      {:ok false :errors :not-found}
+      {:ok true :role role})))
