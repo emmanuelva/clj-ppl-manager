@@ -1,4 +1,4 @@
-(ns clj-ppl-manager.api.helpers
+(ns clj-ppl-manager.handlers.rest.helpers
   (:require [cheshire.core :as json]))
 
 (defn response
@@ -11,3 +11,7 @@
      (when body {:body (json/encode body)}))))
 
 (def ok (partial response 200))
+(def created (partial response 201))
+(def bad-request (partial response 400))
+(def not-found (partial response 404))
+(def unprocessable-entity (partial response 422))

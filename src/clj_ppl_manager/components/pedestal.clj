@@ -13,7 +13,7 @@
   (interceptor/interceptor
     {:name  ::inject-dependencies
      :enter (fn [context]
-              (assoc context :dependencies dependencies))}))
+              (update context :dependencies merge dependencies))}))
 
 (def content-negotiation-interceptor
   (content-negotiation/negotiate-content ["application/json", "text/html"]))
@@ -33,7 +33,9 @@
                       :secure-headers {:content-security-policy-settings {:object-src "none"}}}
                      (conn/with-default-interceptors)
                      (update :interceptors concat
-                             [content-negotiation-interceptor])
+                             [content-negotiation-interceptor
+                              (inject-dependencies {:datasource (when-let [datasource-component (:datasource component)]
+                                                                   (datasource-component))})])
                      (conn/with-routes clj-ppl-manager.routes/combined-routes)
                      (hk/create-connector nil)
                      (conn/start!))]

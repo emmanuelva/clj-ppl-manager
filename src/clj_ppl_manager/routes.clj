@@ -1,6 +1,11 @@
 (ns clj-ppl-manager.routes
-  (:require [clj-ppl-manager.api.health :as api.health]
-            [io.pedestal.http.route :as route]))
+  (:require [clj-ppl-manager.handlers.htmx.routes :as htmx.routes]
+            [clj-ppl-manager.handlers.rest.health :as rest.health]
+            [clj-ppl-manager.handlers.rest.routes :as rest.routes]
+            [clojure.set :as set]))
 
 (def combined-routes
-  #{["/health" :get api.health/respond-ok :route-name :health]})
+  (set/union
+    #{["/health" :get rest.health/respond-ok :route-name :health]}
+    rest.routes/routes
+    htmx.routes/routes))
