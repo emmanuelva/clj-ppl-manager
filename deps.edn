@@ -7,7 +7,6 @@
          com.stuartsierra/component              {:mvn/version "1.2.0"}
          com.stuartsierra/component.repl         {:mvn/version "1.0.0"}
          com.zaxxer/HikariCP                     {:mvn/version "7.1.0"}
-         hiccup/hiccup                           {:mvn/version "2.0.0-RC5"}
          io.pedestal/pedestal.service            {:mvn/version "0.8.1"}
          io.pedestal/pedestal.route              {:mvn/version "0.8.1"}
          io.pedestal/pedestal.http-kit           {:mvn/version "0.8.1"}
