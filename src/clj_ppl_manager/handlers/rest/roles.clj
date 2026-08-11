@@ -1,6 +1,7 @@
 (ns clj-ppl-manager.handlers.rest.roles
   (:require [clj-ppl-manager.controllers.roles :as controllers.roles]
-            [clj-ppl-manager.handlers.rest.helpers :as rest.helpers]))
+            [clj-ppl-manager.handlers.rest.helpers :as rest.helpers])
+  (:import (java.util UUID)))
 
 (defn create-role
   [request datasource]
@@ -14,7 +15,7 @@
   [request datasource]
   (let [id-param   (-> request :path-params :id)]
     (try
-      (let [id (parse-uuid id-param)
+      (let [id (UUID/fromString id-param)
             {:keys [ok role]} (controllers.roles/find-role id datasource)]
         (if ok
           (rest.helpers/ok role)

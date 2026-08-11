@@ -1,6 +1,7 @@
 (ns clj-ppl-manager.handlers.rest.permissions
   (:require [clj-ppl-manager.controllers.permissions :as controllers.permissions]
-            [clj-ppl-manager.handlers.rest.helpers :as rest.helpers]))
+            [clj-ppl-manager.handlers.rest.helpers :as rest.helpers])
+  (:import (java.util UUID)))
 
 (defn create-permission
   [request datasource]
@@ -16,7 +17,7 @@
   [request datasource]
   (let [id-param   (-> request :path-params :id)]
     (try
-      (let [id (parse-uuid id-param)
+      (let [id (UUID/fromString id-param)
             {:keys [ok permission]} (controllers.permissions/find-permission id datasource)]
         (if ok
           (rest.helpers/ok permission)

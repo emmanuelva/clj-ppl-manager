@@ -1,7 +1,7 @@
 (ns clj-ppl-manager.integration.aux.component
   (:require [clj-ppl-manager.components.datasource :as components.datasource]
             [clj-ppl-manager.config :as config]
-            [clj-ppl-manager.core]
+            [clj-ppl-manager.core :as core]
             [clj-ppl-manager.integration.aux.containers :as aux.containers]
             [clojure.string :as str]
             [clojure.test :refer :all]
@@ -49,5 +49,16 @@
           (f (started))
           (finally
             (component/stop started))))
+      (finally
+        (.stop database-container)))))
+
+(defn with-app-system
+  [f]
+  (let [database-container (aux.containers/create-database-container)]
+    (try
+      (.start database-container)
+      (with-system
+        [sut (core/app-system (test-with-container-config database-container))]
+        (f sut))
       (finally
         (.stop database-container)))))
