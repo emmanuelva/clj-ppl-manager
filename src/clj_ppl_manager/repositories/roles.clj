@@ -4,7 +4,6 @@
             [next.jdbc :as jdbc]))
 
 (defn save-new-role!
-  "Attempt to save a new role"
   {:malli/schema [:=> [:cat :string :any] :clj-ppl-manager/role]}
   [name datasource]
   (let [columns [:id :name]
@@ -20,7 +19,6 @@
         (repositories.utils/normalize-db-response))))
 
 (defn get-role-by-id
-  "Attempt to save a new role"
   {:malli/schema [:=> [:cat :uuid :any] :clj-ppl-manager/role]}
   [id datasource]
   (let [query (-> {:select [:id :name]

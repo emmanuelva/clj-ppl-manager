@@ -4,7 +4,6 @@
             [next.jdbc :as jdbc]))
 
 (defn save-new-permission!
-  "Attempt to save a new permission"
   {:malli/schema [:=> [:cat :clj-ppl-manager/new-permission :any] :clj-ppl-manager/permission]}
   [{:keys [role-id field write]} datasource]
   (let [columns [:id :role_id :field :write]
@@ -20,7 +19,6 @@
         (repositories.utils/normalize-db-response))))
 
 (defn get-permission-by-id
-  "Attempt to get a permission by id"
   {:malli/schema [:=> [:cat :uuid :any] :clj-ppl-manager/permission]}
   [id datasource]
   (let [query (-> {:select [:id :role_id :field :write]
@@ -32,3 +30,13 @@
           query
           {:return-keys true})
         (repositories.utils/normalize-db-response))))
+
+(defn get-permissions-by-role-id
+  {:malli/schema [:=> [:cat :uuid :any] [:sequential :clj-ppl-manager/permission]]}
+  [role-id datasource]
+  (let [query (-> {:select [:id :role_id :field :write]
+                   :from   :permissions
+                   :where  [:= :role_id role-id]}
+                  (sql/format))]
+    (->> (jdbc/execute! datasource query)
+         (mapv repositories.utils/normalize-db-response))))

@@ -1,5 +1,6 @@
 (ns clj-ppl-manager.controllers.roles
-  (:require [clj-ppl-manager.repositories.roles :as repositories.roles]
+  (:require [clj-ppl-manager.repositories.permissions :as repositories.permissions]
+            [clj-ppl-manager.repositories.roles :as repositories.roles]
             [malli.core :as m]))
 
 (def NewRole
@@ -16,4 +17,5 @@
   (let [role (repositories.roles/get-role-by-id id datasource)]
     (if (empty? role)
       {:ok false :errors :not-found}
-      {:ok true :role role})))
+      (let [permissions (repositories.permissions/get-permissions-by-role-id id datasource)]
+        {:ok true :role (assoc role :permissions permissions)}))))
