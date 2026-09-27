@@ -35,7 +35,8 @@
                      (update :interceptors concat
                              [content-negotiation-interceptor
                               (inject-dependencies {:datasource (when-let [datasource-component (:datasource component)]
-                                                                   (datasource-component))})])
+                                                                   (datasource-component))
+                                                     :jwt-secret (-> config :jwt :secret)})])
                      (conn/with-routes clj-ppl-manager.routes/combined-routes)
                      (hk/create-connector nil)
                      (conn/start!))]

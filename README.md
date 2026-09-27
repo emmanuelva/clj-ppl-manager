@@ -6,3 +6,7 @@ Start app in repl:
 (in-ns 'dev)
 (component-repl/reset)
 ```
+
+## Initial account
+
+pass: ppl-admin

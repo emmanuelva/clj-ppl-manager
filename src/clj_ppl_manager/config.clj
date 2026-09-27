@@ -18,4 +18,5 @@
                             (env-get "DATABASE_PORT" "5432") "/"
                             (env-get "DATABASE_NAME" "ecommerce"))
              :username (env-get "DATABASE_USERNAME" "postgres")
-             :password (env-get "DATABASE_PASSWORD" "postgres")}})
+             :password (env-get "DATABASE_PASSWORD" "postgres")}
+   :jwt     {:secret (env-get "JWT_SECRET" "dev-secret-change-me")}})

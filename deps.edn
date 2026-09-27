@@ -1,5 +1,6 @@
 {:paths ["src" "dev" "resources"]
  :deps  {buddy/buddy-hashers                     {:mvn/version "2.0.167"}
+         buddy/buddy-sign                        {:mvn/version "3.6.1-359"}
          cheshire/cheshire                       {:mvn/version "6.2.0"}
          clj-http/clj-http                       {:mvn/version "3.13.1"}
          com.github.seancorfield/next.jdbc       {:mvn/version "1.3.9999-SNAPSHOT"}

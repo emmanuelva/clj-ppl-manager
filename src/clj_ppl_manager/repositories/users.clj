@@ -32,3 +32,17 @@
           query
           {:return-keys true})
         (repositories.utils/normalize-db-response))))
+
+(defn get-user-by-email
+  "Attempt to get a user by email"
+  {:malli/schema [:=> [:cat :string :any] :clj-ppl-manager/user]}
+  [email datasource]
+  (let [query (-> {:select [:id :role_id :email :password]
+                   :from   :users
+                   :where  [:= :email email]}
+                  (sql/format))]
+    (-> (jdbc/execute-one!
+          datasource
+          query
+          {:return-keys true})
+        (repositories.utils/normalize-db-response))))
