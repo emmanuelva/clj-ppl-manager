@@ -1,13 +1,13 @@
-(ns clj-ppl-manager.handlers.rest.permissions
+(ns clj-ppl-manager.handlers.permissions
   (:require [clj-ppl-manager.controllers.permissions :as controllers.permissions]
-            [clj-ppl-manager.handlers.rest.helpers :as rest.helpers])
+            [clj-ppl-manager.handlers.helpers :as rest.helpers])
   (:import (java.util UUID)))
 
 (defn create-permission
   [request datasource]
-  (let [input      (-> (:json-params request)
+  (let [input      (-> (:body-params request)
                         (select-keys [:role-id :field :write])
-                        (update :role-id #(some-> % parse-uuid)))
+                        (update :role-id (fn [v] (if (uuid? v) v (some-> v parse-uuid)))))
         {:keys [ok permission errors]} (controllers.permissions/create-permission! input datasource)]
     (if ok
       (rest.helpers/created permission)
@@ -26,18 +26,10 @@
         (println (ex-message e))
         (rest.helpers/bad-request {:error "invalid id"})))))
 
-(def create-permission-handler
-  {:name :rest.permissions/create
-   :enter
-   (fn [{:keys [dependencies request] :as context}]
-     (let [{:keys [datasource]} dependencies]
-       (->> (create-permission request datasource)
-            (assoc context :response))))})
+(defn create-permission-handler
+  [{:keys [datasource] :as request}]
+  (create-permission request datasource))
 
-(def get-permission-handler
-  {:name :rest.permissions/get
-   :enter
-   (fn [{:keys [dependencies request] :as context}]
-     (let [{:keys [datasource]} dependencies]
-       (->> (get-permission request datasource)
-            (assoc context :response))))})
+(defn get-permission-handler
+  [{:keys [datasource] :as request}]
+  (get-permission request datasource))

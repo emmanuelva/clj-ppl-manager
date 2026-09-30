@@ -1,5 +1,5 @@
 (ns clj-ppl-manager.core
-  (:require [clj-ppl-manager.components.pedestal :as component.pedestal]
+  (:require [clj-ppl-manager.components.http :as components.http]
             [clj-ppl-manager.components.datasource :as components.datasource]
             [com.stuartsierra.component :as component]))
 
@@ -7,15 +7,15 @@
   [config]
   (component/system-map
     :datasource (components.datasource/datasource-component config)
-    :pedestal-component
+    :http-component
     (component/using
-      (component.pedestal/new-pedestal-component config)
+      (components.http/new-http-component config)
       [:datasource])))
 
 (defn base-test-app-system
   [config]
   (component/system-map
-    :pedestal-component
+    :http-component
     (component/using
-      (component.pedestal/new-pedestal-component config)
+      (components.http/new-http-component config)
       [])))

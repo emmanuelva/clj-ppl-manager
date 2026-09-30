@@ -1,7 +1,7 @@
 (ns clj-ppl-manager.integration.endpoints.roles-test
   (:require [cheshire.core :as json]
             [clj-http.client :as client]
-            [clj-ppl-manager.components.pedestal :refer [url-for]]
+            [clj-ppl-manager.components.http :refer [url-for]]
             [clj-ppl-manager.integration.aux.component :as aux.component]
             [clojure.test :refer :all]))
 

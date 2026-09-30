@@ -19,7 +19,7 @@
 (defn sut->url
   [sut path]
   (str/join ["http://localhost:"
-             (-> sut :pedestal-component :config :server :port)
+             (-> sut :http-component :config :server :port)
              path]))
 
 (defn get-free-port

@@ -1,14 +1,12 @@
-(ns clj-ppl-manager.handlers.rest.helpers
-  (:require [cheshire.core :as json]))
+(ns clj-ppl-manager.handlers.helpers)
 
 (defn response
   ([status]
    (response status nil))
   ([status body]
    (merge
-     {:status  status
-      :headers {"Content-Type" "application/json"}}
-     (when body {:body (json/encode body)}))))
+     {:status status}
+     (when body {:body body}))))
 
 (def ok (partial response 200))
 (def created (partial response 201))
